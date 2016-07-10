@@ -6,6 +6,7 @@ var logger = require('./services/LogService');
 var app = express();
 var http = require('http').Server(app);
 var comm = require('./services/CommService')(http);
+var awsService = require('./services/AWSService');
 
 http.listen(3000);
 
@@ -26,5 +27,7 @@ app.use(function(req, res, next) {
 });
 
 app.use(require('./services/ErrorHandler').ShowError);
+
+awsService.load(path.join(__dirname, "config.json"));
 
 module.exports = app;

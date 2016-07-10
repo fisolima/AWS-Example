@@ -1,29 +1,47 @@
 "use strict";
 
+var chalk = require('chalk');
+
 var logType = {
 	error: 'ERROR',
 	warning: 'WARNING',
 	info: 'INFO'
 };
 
-var WriteLog = function(type, message, obj)
-{
-	console.log( type + ' - ' + message + ((obj !== undefined) ? JSON.stringify(obj) : ''));
-};
 
 var writeError = function (message, err, obj)
 {
-	WriteLog(logType.error, message, obj !== null ? {err: err, obj: obj} : err);
+	console.log(
+		chalk.red(logType.error) +
+		' ' +
+		chalk.white(message) +
+		'\n' +
+		chalk.yellow(err) +
+		'\n' +
+		chalk.green((obj !== undefined) ? JSON.stringify(obj) : '')
+	);
 };
 
 var writeWarning = function (message, obj)
 {
-	WriteLog(logType.warning, message, obj);
+	console.log(
+		chalk.yellow(logType.warning) +
+		' ' +
+		chalk.white(message) +
+		'\n' +
+		chalk.green((obj !== undefined) ? JSON.stringify(obj) : '')
+	);
 };
 
 var writeInfo = function (message, obj)
 {
-	WriteLog(logType.info, message, obj);
+	console.log(
+		chalk.blue(logType.info) +
+		' ' +
+		chalk.white(message) +
+		'\n' +
+		chalk.green((obj !== undefined) ? JSON.stringify(obj) : '')
+	);
 };
 
 module.exports =
