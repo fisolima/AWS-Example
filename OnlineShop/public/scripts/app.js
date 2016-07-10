@@ -58,6 +58,8 @@ com.shop.app = (function(){
 
 		_webSocket.on('authenticated', function (data){
 			finalizeAuthentication(data);
+
+			sessionStorage.setItem('com.shop.username', username);
 		});
 
 		_webSocket.emit('authenticate', username);
@@ -79,6 +81,8 @@ com.shop.app = (function(){
 
 		_webSocket = null;
 
+		sessionStorage.removeItem('com.shop.username');
+
 		headerUserLoggedPanel.css('display','none');
 		loginSection.css('display','block');
 		shopSection.css('display','none');
@@ -89,6 +93,11 @@ com.shop.app = (function(){
 			setupInterface();
 
 			console.log('Online Shop ready');
+
+			var username = sessionStorage.getItem('com.shop.username');
+
+			if (username)
+				login(username);
 		},
 		getUsername: function(){return _username;}
 	};

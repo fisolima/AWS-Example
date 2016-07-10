@@ -28,6 +28,14 @@ section {
     border-radius: 10px;
 }
 
+#shopSection{
+    width: 90%;
+    height: 80%;
+    position:absolute;
+    left: 5%;
+    top: 13%;
+}
+
 #loginSection {
     width: 300px;
     height: 150px;

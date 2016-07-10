@@ -17,8 +17,8 @@ module.exports = {
 		logger.info('authenticated', {id: userSession.id, username: userSession.username});
 	},
 	findSessionByUsername: function(username) {
-		return userSessionList.filter(function(userSession){
-			userSession.username == username;
+		return userSessionList.filter(function(value){
+			value.username == username;
 		});
 	},
 	findSessionById: function(id){
