@@ -1,0 +1,52 @@
+body {
+    background: #497aa4;
+}
+
+.header{
+    width: 100%;
+}
+
+#appName{
+    float: left;
+}
+
+input{
+    -moz-box-sizing: border-box;
+}
+
+#headerUserLogged{
+    display: inline-block;
+    float: right;
+}
+
+#headerUserLogged label{
+    margin-right: 10px;
+}
+
+#loginSection {
+    width: 300px;
+    height: 150px;
+    border: 2px solid #ffffff;
+    border-radius: 10px;
+    position:absolute;
+    margin-top:-75px;
+    margin-left:-150px;
+    top:50%;
+    left:50%;
+}
+
+#loginSection div{
+    width: 250px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#loginSection input{
+    width: 100%;
+    margin-left: 25px;
+}
+
+#loginSection input[type=button]{
+    margin-top: 15px;
+}

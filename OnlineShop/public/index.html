@@ -3,23 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>Online Shop</title>
+     <link rel="stylesheet" type="text/css" href="/css/main.css">
 </head>
 <body>
-<h1>Online Shop</h1>
+<div id="mainBody">
+    <header>
+        <div id="appName"><h2>Online Shop</h2></div>
+        <div id="headerUserLogged">
+            <label>Welcome:</label>
+            <a id="headerSignOut" href="#">Sign out</a>
+        </div>
+    </header>
+    <section id="loginSection">
+        <div>
+            <input type="text" id="loginUsername" placeholder="Enter your username">
+            <input type="button" id="loginSignIn" value="Sign in">
+        </div>
+    </section>
+</div>
 
 <script src="/socket.io/socket.io.js"></script>
+<script src="/js/libs/jquery.js"></script>
+<script src="/js/globals.js"></script>
+<script src="/js/app.js"></script>
 
 <script>
-  var socket = io({transports: ['websocket']});
-
-  socket.on('connect', function(){
-        console.log('connected');
-  });
-
-  socket.on('disconnect', function(){
-        console.log('disconnected');
-  });
+    $(function(){
+        com.shop.app.startup();
+    });
 </script>
-
 </body>
 </html>

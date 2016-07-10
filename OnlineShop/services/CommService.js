@@ -11,6 +11,8 @@ var comm = function(http){
 	io.on('connection', function (socket){
 		logger.info('User connected', socket.id);
 
+		socket.emit('confirm', {id: socket.id, msg: 'welcome'});
+		
 		socket.on('disconnect', function (){
 			logger.info('User disconnected', socket.id);
 		});
