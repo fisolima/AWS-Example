@@ -5,45 +5,83 @@
 com.shop.app = (function(){
 
 	var _username = '';
+	var _webSocket = null;
+
+	var headerUserLoggedPanel = $('#headerUserLogged');
+	var loginSection = $('#loginSection');
+	var shopSection = $('#shopSection');
 
 	var setupInterface = function(){
-		$('#headerUserLogged').css('display','none');
+		headerUserLoggedPanel.css('display','none');
+		shopSection.css('display','none');
 
-		$('#loginSignIn').prop("disabled",true);
+		var loginButton = $('#loginSignIn');
+		var loginUsernameText = $('#loginUsername');
 
-		$('#loginUsername').on('input propertychange paste', function() {
-			$('#loginSignIn').prop("disabled", $('#loginUsername').val().length === 0);
+		loginButton.prop("disabled",true);
+
+		loginUsernameText.on('input propertychange paste', function() {
+			loginButton.prop("disabled", loginUsernameText.val().length === 0);
 		});
 
-		$('#loginSignIn').click(function(){
-			var username = $('#loginUsername').val();
+		loginButton.click(function(){
+			var username = loginUsernameText.val();
 
 			login(username);
 		});
+
+		$('#headerSignOut').click(function(){
+			logout();
+		});
+	};
+
+	var finalizeAuthentication = function (id){
+		console.log('finalize: ' + id);
+
+		headerUserLoggedPanel.css('display','block');
+		loginSection.css('display','none');
+		shopSection.css('display','block');
+
+		headerUserLoggedPanel.find('label').html('Welcome ' + _username + ' (' + id + ')');
+	};
+
+	var connect = function(username){
+		_webSocket = io({transports: ['websocket']});
+
+		_webSocket.on('connect', function(){
+			console.log('connected');
+		});
+
+		_webSocket.on('disconnect', function(){
+			console.log('disconnected');
+		});
+
+		_webSocket.on('authenticated', function (data){
+			finalizeAuthentication(data);
+		});
+
+		_webSocket.emit('authenticate', username);
 	};
 
 	var login = function(username){
 		_username = username;
 
 		console.log(_username);
-		
-		// var socket = io({transports: ['websocket']});
-		//
-		// socket.on('connect', function(){
-		// 	console.log('connected');
-		// });
-		//
-		// socket.on('confirm', function(data){
-		//   console.log(JSON.stringify(data));
-		// });
-		//
-		// socket.on('disconnect', function(){
-		// 	console.log('disconnected');
-		// });
+
+		connect(_username);
 	};
 
 	var logout  = function(){
 		_username = '';
+
+		if (_webSocket)
+			_webSocket.disconnect();
+
+		_webSocket = null;
+
+		headerUserLoggedPanel.css('display','none');
+		loginSection.css('display','block');
+		shopSection.css('display','none');
 	};
 
 	return {

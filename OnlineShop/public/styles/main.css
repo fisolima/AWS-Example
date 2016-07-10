@@ -23,11 +23,14 @@ input{
     margin-right: 10px;
 }
 
+section {
+    border: 2px solid #ffffff;
+    border-radius: 10px;
+}
+
 #loginSection {
     width: 300px;
     height: 150px;
-    border: 2px solid #ffffff;
-    border-radius: 10px;
     position:absolute;
     margin-top:-75px;
     margin-left:-150px;
