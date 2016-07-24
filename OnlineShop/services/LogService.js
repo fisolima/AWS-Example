@@ -12,7 +12,7 @@ var writeError = function (message, err, obj)
 	console.error(
 		logType.error +	' - ' + (new Date()) + '\n' +
 		message + '\n' +
-		err + '\n' +
+		JSON.stringify(err) + '\n' +
 		((obj !== undefined) ? JSON.stringify(obj) + '\n' : ''));
 };
 

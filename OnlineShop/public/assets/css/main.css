@@ -1,0 +1,13 @@
+body {
+    background: #497aa4;
+}
+
+
+input{
+    -moz-box-sizing: border-box;
+}
+
+section {
+    border: 2px solid #ffffff;
+    border-radius: 10px;
+}

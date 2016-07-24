@@ -1,6 +1,6 @@
 "use strict";
 
-var UserSession = require('../Objects/UserSession');
+var UserSession = require('../objects/UserSession');
 var logger = require('./LogService');
 
 var userSessionList = [];

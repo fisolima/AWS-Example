@@ -13,17 +13,19 @@ http.listen(3000);
 logger.info("Online shop listening on 3000");
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use("/css",express.static(path.join(__dirname, "public/styles")));
-app.use("/js",express.static(path.join(__dirname, "public/scripts")));
-app.use("/img",express.static(path.join(__dirname, "public/resources")));
 app.use("/angular/angular.js",express.static(path.join(__dirname, "node_modules/angular/angular.js")));
+app.use("/angular/angular-route.js",express.static(path.join(__dirname, "node_modules/angular-route/angular-route.js")));
 
-app.use('/', require('./controllers/homeController'));
+app.get('*',function(req, res, next) {
+	var indexPagePath = path.join(__dirname, 'public', 'index.html');
+
+	res.sendFile(indexPagePath);
+});
 
 app.use(function(req, res, next) {
 	var err = new Error('Not Found');
 	err.status = 404;
-	err.url = req.originalUrl;
+	err.url = 'URL: ' + req.originalUrl;
 	next(err);
 });
 
