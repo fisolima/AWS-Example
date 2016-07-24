@@ -6,22 +6,24 @@ var logger = require('./LogService');
 var userSessionList = [];
 
 module.exports = {
-	createSession: function(username, socket){
+	create: function(username, socket){
 		var userSession = new UserSession(socket.id, username, socket);
 		
-		userSessionList[userSession.id] = userSession;
+		userSessionList.push(userSession);
 
 		if (socket)
 			socket.emit('authenticated', userSession.id);
 
 		logger.info('authenticated', {id: userSession.id, username: userSession.username});
 	},
-	findSessionByUsername: function(username) {
+	findByUsername: function(username) {
 		return userSessionList.filter(function(value){
-			value.username == username;
+			return value.username == username;
 		});
 	},
-	findSessionById: function(id){
-		return userSessionList[id];
+	findById: function(id){
+		return userSessionList.find(function (value){
+			return value.id === id;
+		});
 	}
 };

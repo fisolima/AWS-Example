@@ -16,7 +16,7 @@ var comm = function(http){
 		socket.on('authenticate', function (data){
 			logger.info('authenticate', data);
 
-			userSessionService.createSession(data, socket);
+			userSessionService.create(data, socket);
 		});
 		
 		socket.on('disconnect', function (){

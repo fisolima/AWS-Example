@@ -3,36 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Online Shop</title>
-     <link rel="stylesheet" type="text/css" href="/css/main.css">
 </head>
-<body>
-<div id="mainBody">
-    <header>
-        <div id="appName"><h2>Online Shop</h2></div>
-        <div id="headerUserLogged">
-            <label>Welcome:</label>
-            <a id="headerSignOut" href="#">Sign out</a>
-        </div>
-    </header>
-    <section id="loginSection">
-        <div>
-            <input type="text" id="loginUsername" placeholder="Enter your username">
-            <input type="button" id="loginSignIn" value="Sign in">
-        </div>
-    </section>
-    <section id="shopSection">
-    </section>
-</div>
+<body ng-controller="appController">
 
-<script src="/socket.io/socket.io.js"></script>
-<script src="/js/libs/jquery.js"></script>
-<script src="/js/globals.js"></script>
-<script src="/js/app.js"></script>
+<h1>{{testMessage}}</h1>
 
-<script>
-    $(function(){
-        com.shop.app.startup();
-    });
-</script>
+<!--<script src="/socket.io/socket.io.js"></script>-->
+<!--<script src="/angular/angular.js"></script>-->
+git
+<!--<script src="/app/app.js"></script>-->
+
+<!--<script>-->
+    <!--angular.element(document).ready(function() {-->
+      <!--angular.bootstrap(document, ['app']);-->
+    <!--});-->
+<!--</script>-->
+
 </body>
 </html>

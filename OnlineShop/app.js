@@ -16,6 +16,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use("/css",express.static(path.join(__dirname, "public/styles")));
 app.use("/js",express.static(path.join(__dirname, "public/scripts")));
 app.use("/img",express.static(path.join(__dirname, "public/resources")));
+app.use("/angular/angular.js",express.static(path.join(__dirname, "node_modules/angular/angular.js")));
 
 app.use('/', require('./controllers/homeController'));
 
