@@ -6,14 +6,15 @@
 
 	var app = angular.module('app');
 	
-	var loginController = function($location){
+	var loginController = function($location, userSession){
 		var ctrl = this;
 
 		ctrl.username = '';
-		
+
 		ctrl.login = function(){
-			if (ctrl.loginForm.$valid){
-				console.log(ctrl.username);
+			if (ctrl.loginForm.$valid)
+			{
+				userSession.login(ctrl.username);
 
 				$location.path('/');
 			}
@@ -26,7 +27,7 @@
 	
 	app.component('login',{
 		templateUrl: '/app/components/login/login.view.html',
-		controller: ['$location', loginController],
+		controller: ['$location','userSession', loginController],
 		controllerAs: 'loginController'
 	});
 }());

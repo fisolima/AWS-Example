@@ -12,7 +12,10 @@
 				template: '<login></login>'
 			})
 			.when('/', {
-				template: '<div>Order list</div>'
+				template: '<div class="main">' +
+								'<products></products>' +
+								'<orders></orders>' +
+							'</div>'
 			})
 			.otherwise({
 				redirectTo: '/'
@@ -22,5 +25,12 @@
                  enabled: true,
                  requireBase: false
           });
+	}]);
+	
+	app.run(['$rootScope','$location','userSession',function($rootScope,$location,userSession) {
+		$rootScope.$on('$locationChangeStart', function(event,next,current) {
+			if (!userSession.isAuthenticated())
+				$location.path('/login');
+		});
 	}]);
 }());
