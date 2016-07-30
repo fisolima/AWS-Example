@@ -20,7 +20,11 @@ var comm = function(http){
 		});
 		
 		socket.on('disconnect', function (){
-			logger.info('User disconnected', socket.id);
+			var userSession = userSessionService.findById(socket.id);
+
+			userSessionService.remove(userSession);
+			
+			logger.info('User disconnected', userSession.username);
 		});
 	});
 };

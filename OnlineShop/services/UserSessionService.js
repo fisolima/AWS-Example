@@ -25,5 +25,13 @@ module.exports = {
 		return userSessionList.find(function (value){
 			return value.id === id;
 		});
+	},
+	remove: function(userSession) {
+		var index = userSessionList.indexOf(userSession);
+
+		if (index < 0)
+			return;
+
+		userSessionList.splice(index, 1);
 	}
 };
