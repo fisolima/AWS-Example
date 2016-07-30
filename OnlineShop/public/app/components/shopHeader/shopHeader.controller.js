@@ -6,7 +6,7 @@
 	
 	var app = angular.module('app');
 	
-	var headerController = function($location, userSession){
+	var headerController = function($location, comm, userSession){
 		var ctrl = this;
 
 		ctrl.isAuthenticated = userSession.isAuthenticated;
@@ -14,7 +14,9 @@
 		ctrl.getUsername = userSession.getUsername;
 
 		ctrl.logout = function(){
-			userSession.logout()
+			comm.disconnect();
+			
+			userSession.logout();
 
 			$location.path('/login');
 		}
@@ -22,7 +24,7 @@
 	
 	app.component('shopHeader',{
 		templateUrl: '/app/components/shopHeader/shopHeader.view.html',
-		controller: ['$location', 'userSession', headerController],
+		controller: ['$location', 'comm', 'userSession', headerController],
 		controllerAs: 'headerController'
 	});
 }());

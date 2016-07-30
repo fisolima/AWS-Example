@@ -6,23 +6,28 @@
 
 	var app = angular.module('app');
 
-	app.service('userSession', function(){
-		var _username = '';
+	app.service('userSession', function() {
+		var service = this;
 
-		this.isAuthenticated = function (){
-			return _username && _username.length !== 0;
+		service.isAuthenticated = function() {
+			var username = service.getUsername();
+
+			return username && username.length !== 0;
 		};
 
-		this.login = function(username){
-			_username = username;
+		service.login = function(username) {
+			if (service.isAuthenticated())
+				return;
+
+			sessionStorage.setItem('os-username', username);
 		};
 
-		this.logout = function (){
-			_username = '';
+		service.logout = function() {
+			sessionStorage.removeItem('os-username');
 		};
 
-		this.getUsername = function(){
-			return _username;
+		service.getUsername = function(){
+			return sessionStorage.getItem('os-username');
 		};
 	});
 }());

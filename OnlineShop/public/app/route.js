@@ -25,9 +25,18 @@
                  enabled: true,
                  requireBase: false
           });
+
+
 	}]);
 	
-	app.run(['$rootScope','$location','userSession',function($rootScope,$location,userSession) {
+	app.run(['$rootScope','$location','comm', 'userSession',function($rootScope, $location, comm, userSession) {
+
+		console.log("app.run");
+
+		if (userSession.isAuthenticated()){
+			comm.emit('authenticate', userSession.getUsername());
+		}
+
 		$rootScope.$on('$locationChangeStart', function(event,next,current) {
 			if (!userSession.isAuthenticated())
 				$location.path('/login');

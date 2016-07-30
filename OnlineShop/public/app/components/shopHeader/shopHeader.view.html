@@ -1,7 +1,7 @@
 <header>
     <div id="appName">Online Shop</div>
     <div id="headerUserLogged" ng-show="headerController.isAuthenticated()">
-        <label>Welcome: {{headerController.getUsername()}}</label>
+        <label>Welcome: <b>{{headerController.getUsername()}}</b></label>
         <a id="headerSignOut" href="#" ng-click="headerController.logout()">Sign out</a>
     </div>
 </header>

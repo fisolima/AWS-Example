@@ -2,21 +2,33 @@
 
 (function(){
 
-	"use strict";
+	//"use strict";
 
 	var app = angular.module('app');
 	
-	var loginController = function($location, userSession){
+	var loginController = function($location, $rootScope, comm, userSession){
 		var ctrl = this;
 
 		ctrl.username = '';
 
+		comm.registerEvent('authenticated', function(data) {
+			console.log('Login completed: %o ' +  ctrl.username, data );
+
+			userSession.login(ctrl.username);
+
+			$location.path('/');
+
+			$rootScope.$apply();
+
+			var thisEvent = arguments.callee;
+
+			comm.unregisterEvent('authenticated', thisEvent);
+		});
+
 		ctrl.login = function(){
 			if (ctrl.loginForm.$valid)
 			{
-				userSession.login(ctrl.username);
-
-				$location.path('/');
+				comm.emit('authenticate', ctrl.username);
 			}
 			else
 			{
@@ -27,7 +39,7 @@
 	
 	app.component('login',{
 		templateUrl: '/app/components/login/login.view.html',
-		controller: ['$location','userSession', loginController],
+		controller: ['$location', '$rootScope', 'comm', 'userSession', loginController],
 		controllerAs: 'loginController'
 	});
 }());
