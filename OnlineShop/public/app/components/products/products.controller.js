@@ -6,29 +6,19 @@
 
 	var app = angular.module('app');
 
-	var productsController = function() {
-
+	var productsController = function(productProvider, orderManager) {
 		var ctrl = this;
 
-		ctrl.products = [];
+		ctrl.products = productProvider.products;
 
-		ctrl.addProduct = function(){
-			ctrl.products.push(
-				{
-					name: 'product_' + (ctrl.products.length + 1).toString(),
-					quantity: (ctrl.products.length + 1) * 2,
-					reserved: (ctrl.products.length + 1)
-				});
-		};
-
-		ctrl.buyProduct = function(product){
-			console.log("%o", product);
+		ctrl.reserveProduct = function(product) {
+			orderManager.addOrder(product);
 		};
 	};
 
 	app.component('products',{
 		templateUrl: '/app/components/products/products.view.html',
-		controller: productsController,
+		controller: ['productProvider', 'orderManager', productsController],
 		controllerAs: 'productsController'
 	});
 }());

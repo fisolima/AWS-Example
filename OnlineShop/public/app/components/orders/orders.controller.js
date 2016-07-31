@@ -6,12 +6,15 @@
 
 	var app = angular.module('app');
 
-	var ordersController = function(){
+	var ordersController = function(orderManager) {
+		var ctrl = this;
+		
+		ctrl.orders = orderManager.orders;
 	};
 
 	app.component('orders',{
 		templateUrl: '/app/components/orders/orders.view.html',
-		controller: ordersController,
+		controller: ['orderManager', ordersController],
 		controllerAs: 'ordersController'
 	});
 }());
