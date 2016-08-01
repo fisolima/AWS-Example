@@ -5,7 +5,7 @@ var express = require('express');
 var logger = require('./services/LogService');
 var app = express();
 var http = require('http').Server(app);
-var comm = require('./services/CommService')(http);
+var commService = require('./services/CommService')(http);
 var awsService = require('./services/AWSService');
 
 http.listen(3000);

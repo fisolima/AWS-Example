@@ -7,7 +7,7 @@
 
 	var app = angular.module('app');
 
-	app.factory('comm', function(){
+	app.factory('comm', ['$rootScope', function($rootScope){
 		var _webSocket = null;
 
 		var _eventListener = {};
@@ -21,6 +21,8 @@
 			_eventListener[eventId].forEach(function(callback) {
 				callback(data);
 			});
+
+			$rootScope.$digest();
 		};
 
 		var _registerEvent = function(eventId, callback) {
@@ -52,6 +54,10 @@
 			_webSocket.on('authenticated', function (data){
 				_invokeEvents('authenticated', data);
 			});
+
+			_webSocket.on('productUpdated', function (data){
+				_invokeEvents('productUpdated', data);
+			});
 		};
 
 		var _disconnect = function() {
@@ -76,5 +82,5 @@
 			disconnect: _disconnect,
 			emit: _emit
 		};
-	});
+	}]);
 }());

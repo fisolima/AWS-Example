@@ -6,28 +6,23 @@
 	
 	var app = angular.module('app');
 	
-	app.factory('productProvider', ['$rootScope', 'comm', function($rootScope, comm){
+	app.factory('productProvider', ['comm', function(comm){
 		var _products = [];
 
-		// test
-		setInterval(function() {
-			if (_products.length < 10){
-				var product = new Product('Prd' + _products.length.toString());
-
-				product.quantity = 10;
-				product.reserved = 10;
+		comm.registerEvent('productUpdated', function (item) {
+			var product = _products.find(function(product){
+				return product.id === item.id;
+			});
+			
+			if (!product) {
+				product = new Product(item.id);
 
 				_products.push(product);
 			}
-			else {
-				_products.forEach(function(product){
-					product.quantity++;
-					product.reserved++;
-				});
-			}
-
-			$rootScope.$apply();
-		}, 2000);
+			
+			product.quantity = item.quantity;
+			product.reserved = item.reserved;
+		});
 
 		var server = {};
 

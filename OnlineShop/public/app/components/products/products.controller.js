@@ -6,7 +6,7 @@
 
 	var app = angular.module('app');
 
-	var productsController = function(productProvider, orderManager) {
+	var productsController = function($scope, productProvider, orderManager) {
 		var ctrl = this;
 
 		ctrl.products = productProvider.products;
@@ -18,7 +18,7 @@
 
 	app.component('products',{
 		templateUrl: '/app/components/products/products.view.html',
-		controller: ['productProvider', 'orderManager', productsController],
+		controller: ['$scope','productProvider', 'orderManager', productsController],
 		controllerAs: 'productsController'
 	});
 }());

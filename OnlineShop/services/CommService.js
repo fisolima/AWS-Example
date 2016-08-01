@@ -3,8 +3,9 @@
 var socketio = require('socket.io');
 var logger = require('./LogService');
 var userSessionService = require('./UserSessionService');
+var productHandler = require('./ProductHandler');
 
-var comm = function(http){
+var comm = function(http) {
 	var io = socketio(http);
 
 	io.set('transports', ['websocket']);
@@ -26,6 +27,10 @@ var comm = function(http){
 			
 			logger.info('User disconnected', userSession.username);
 		});
+	});
+
+	productHandler.eventEmitter.on('productUpdated', function(product) {
+		io.sockets.emit('productUpdated', product);
 	});
 };
 
