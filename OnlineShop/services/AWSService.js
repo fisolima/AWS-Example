@@ -2,17 +2,16 @@
 
 var logger = require('./LogService');
 var aws = require('aws-sdk');
-
-var sqs = null;
+var ProductQueueHandler = require('./ProductQueueHandler');
 
 var _load = function(configFile){
 
 	try {
 		aws.config.loadFromPath(configFile);
 
-		sqs = new aws.SQS();
-
 		logger.info("AWSService ready");
+
+		var productQueueHandler = new ProductQueueHandler(aws);
 
 		// var params = {
 		// 	MessageBody: JSON.stringify({type: 'mytype', data: 'myData'}),
@@ -44,8 +43,6 @@ var _load = function(configFile){
 		// });
 	}
 	catch (err){
-		sqs = null;
-
 		logger.error("AWSService", err);
 	}
 };
