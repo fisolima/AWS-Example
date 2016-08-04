@@ -17,9 +17,8 @@ var startQueueListener = function(sqs, queueUrl, onError, onMessage) {
 		// process message
 		.then(function(data) {
 
-			if (!data.Messages) {
-				return logger.info('No message detected');
-			}
+			if (!data.Messages)
+				return;// logger.info('No message detected');
 
 			data.Messages.forEach(onMessage);
 
@@ -29,9 +28,9 @@ var startQueueListener = function(sqs, queueUrl, onError, onMessage) {
 			});
 		})
 		// delete message
-		.then(function(message) {
-			logger.info('Message deletes', message);
-		})
+		// .then(function(message) {
+		// 	logger.info('Message deletes', message);
+		// })
 		// handle error
 		.catch(onError)
 		// next message

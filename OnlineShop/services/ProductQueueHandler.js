@@ -1,9 +1,14 @@
 var QueueHandler = require('./QueueHandler');
 var util = require('util');
 var logger = require('./LogService');
+var productHandler = require('./ProductHandler');
 
 function processMessage(message) {
 	logger.info('Product process message', message);
+	
+	var product = productHandler.parse(message.Body);
+	
+	productHandler.notify(product);
 }
 
 function processError(error) {

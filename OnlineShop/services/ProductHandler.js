@@ -2,42 +2,29 @@
 'use strict';
 
 var EventEmitter = require('events');
-
+var logger = require('./LogService');
 var productEmitter = new EventEmitter();
 
-var products = [];
+var parseProduct = function(productJson) {
+
+	try {
+		var product = JSON.parse(productJson);
+	}
+	catch (err) {
+		logger.error("Error parse product", err, err);
+	}
 
 
-// test
-// var productIndex = 0;
-//
-// setInterval(function() {
-// 	if (products.length < 10){
-// 		var product = {
-// 			id: 'Prd' + products.length.toString(),
-// 			quantity: 10,
-// 			reserved: 10
-// 		};
-//
-// 		products.push(product);
-//
-// 		productEmitter.emit('productUpdated', product);
-// 	}
-// 	else {
-// 		if (productIndex === products.length)
-// 			productIndex = 0;
-//
-// 		var product = products[productIndex++];
-//
-// 		product.quantity++;
-// 		product.reserved++;
-//
-// 		productEmitter.emit('productUpdated', product);
-// 	}
-//
-// }, 2000);
+	if (!product || !product.id || !product.quantity || !product.reserved)
+		throw new Error("Invalid product data: " + productJson);
 
+	return product
+};
 
 module.exports = {
-	eventEmitter: productEmitter	
+	eventEmitter: productEmitter,
+	parse: parseProduct,
+	notify: function(product) {
+		productEmitter.emit('productUpdated', product);
+	}
 };
