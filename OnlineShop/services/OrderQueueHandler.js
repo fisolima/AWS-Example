@@ -1,13 +1,18 @@
 var QueueHandler = require('./QueueHandler');
 var util = require('util');
 var logger = require('./LogService');
+var orderHandler = require('./OrderHandler');
 
 function processMessage(message) {
 	logger.info('Order process message', message);
+
+	var order = orderHandler.parse(message.Body);
+
+	orderHandler.notify(order);
 }
 
 function processError(error) {
-	logger.error('Order process error', error);
+	logger.error('Order process error', error, error);
 }
 
 function OrderQueueHandler(aws) {

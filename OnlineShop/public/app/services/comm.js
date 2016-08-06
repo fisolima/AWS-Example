@@ -58,6 +58,10 @@
 			_webSocket.on('productUpdated', function (data){
 				_invokeEvents('productUpdated', data);
 			});
+
+			_webSocket.on('orderUpdated', function (data){
+				_invokeEvents('orderUpdated', data);
+			});
 		};
 
 		var _disconnect = function() {

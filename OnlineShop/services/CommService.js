@@ -29,7 +29,7 @@ var comm = function(http) {
 		});
 	});
 
-	productHandler.eventEmitter.on('productUpdated', function(product) {
+	productHandler.on('productUpdated', function(product) {
 		io.sockets.emit('productUpdated', product);
 	});
 };
