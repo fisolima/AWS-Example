@@ -7,13 +7,15 @@ var logType = {
 };
 
 
-var writeError = function (message, err, obj)
+var writeError = function (message, obj)
 {
+	var e = (obj instanceof Error) ? obj : new Error('stackquery');
+
 	console.error(
 		logType.error +	' - ' + (new Date()) + '\n' +
 		message + '\n' +
-		JSON.stringify(err) + '\n' +
-		((obj !== undefined) ? JSON.stringify(obj) + '\n' : ''));
+		((obj !== undefined) ? JSON.stringify(obj) : '') + '\n' +
+		e.stack + '\n');
 };
 
 var writeWarning = function (message, obj)

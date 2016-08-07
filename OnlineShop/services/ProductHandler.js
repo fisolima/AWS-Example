@@ -12,7 +12,7 @@ var parseProduct = function(productJson) {
 		product = JSON.parse(productJson);
 	}
 	catch (err) {
-		return logger.error("Error parse product", err, err);
+		return logger.error("Error parse product", err);
 	}
 
 	if (!product || !product.id || !product.quantity || !product.reserved)

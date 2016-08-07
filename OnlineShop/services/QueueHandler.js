@@ -45,7 +45,7 @@ var QueueHandler = function(aws, queueName, onError, onMessage) {
 
 	sqs.listQueues({QueueNamePrefix: queueName}, function(err, data) {
 		if (err)
-			return logger.error('aws find queue', err, err);
+			return logger.error('aws find queue', err);
 
 		var queues = data.QueueUrls || [];
 
@@ -56,7 +56,7 @@ var QueueHandler = function(aws, queueName, onError, onMessage) {
 		if (!queue) {
 			sqs.createQueue({QueueName: queueName}, function(err, data) {
 				if (err)
-					return logger.error('aws create queue', err, err);
+					return logger.error('aws create queue', err);
 
 				logger.info('Queue created', data);
 

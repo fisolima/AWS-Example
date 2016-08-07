@@ -14,6 +14,8 @@ router.post('/', bodyParser.json(), function(req, res) {
 
 	logger.info('Order requested: ', orderRequest);
 
+	// TODO send order request message
+
 	res.sendStatus(200);
 });
 

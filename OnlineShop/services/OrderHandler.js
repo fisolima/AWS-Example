@@ -14,7 +14,7 @@ var parseOrder = function(orderJson) {
 		order = JSON.parse(orderJson);
 	}
 	catch (err) {
-		return logger.error("Error parse order", err, err);
+		return logger.error("Error parse order", err);
 	}
 
 	if (!order || !order.id || !order.username || !order.productName)

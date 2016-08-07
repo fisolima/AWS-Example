@@ -12,7 +12,7 @@ function processMessage(message) {
 }
 
 function processError(error) {
-	logger.error('Order process error', error, error);
+	logger.error('Order process error', error);
 }
 
 function OrderQueueHandler(aws) {
