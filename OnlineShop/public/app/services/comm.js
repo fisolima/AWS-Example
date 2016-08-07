@@ -10,33 +10,72 @@
 	app.factory('comm', ['$rootScope', function($rootScope){
 		var _webSocket = null;
 
-		var _eventListener = {};
+		var _registeredEvents = [];
 
 		var _invokeEvents = function(eventId, data) {
 			console.log('emitted ' + eventId);
 
-			if (!_eventListener.hasOwnProperty(eventId))
+			var registeredEvent = _registeredEvents.find(function(event) {
+				return event.eventId == eventId;
+			});
+
+			if (!registeredEvent)
 				return;
 
-			_eventListener[eventId].forEach(function(callback) {
-				callback(data);
+			registeredEvent.callbacks.forEach(function(cb) {
+				cb(data);
 			});
 
 			$rootScope.$digest();
 		};
 
-		var _registerEvent = function(eventId, callback) {
-			if (!_eventListener.hasOwnProperty(eventId))
-				_eventListener[eventId] = [];
+		var _activateRegisteredEvents = function() {
+			if (!_webSocket)
+				return;
 
-			_eventListener[eventId].push(callback);
+			_registeredEvents.forEach(function(registeredEvent) {
+				if (!registeredEvent.activated) {
+					_webSocket.on(registeredEvent.eventId, function (data){
+						_invokeEvents(registeredEvent.eventId, data);
+					});
+
+					registeredEvent.activated = true;
+				}
+			});
+		};
+
+		var _registerEvent = function(eventId, callback) {
+			var registeredEvent = _registeredEvents.find(function(event) {
+				return event.eventId == eventId;
+			});
+
+			if (!registeredEvent) {
+				registeredEvent = {
+					eventId: eventId,
+					callbacks: [],
+					activated: false
+				};
+
+				_registeredEvents.push(registeredEvent);
+			}
+
+			registeredEvent.callbacks.push(callback);
+
+			_activateRegisteredEvents();
 		};
 
 		var _unregisterEvent = function(eventId, callback) {
-			if (!_eventListener.hasOwnProperty(eventId))
+			var registeredEvent = _registeredEvents.find(function(event) {
+				return event.eventId == eventId;
+			});
+
+			if (!registeredEvent)
 				return;
 
-			_eventListener[eventId].pop(callback);
+			var index = registeredEvent.callbacks.indexOf(callback);
+
+			if (index >= 0)
+				registeredEvent.callbacks = registeredEvent.callbacks.splice(index, 1);
 		};
 
 		var _connect = function() {
@@ -51,17 +90,7 @@
 				_invokeEvents('disconnect', null);
 			});
 
-			_webSocket.on('authenticated', function (data){
-				_invokeEvents('authenticated', data);
-			});
-
-			_webSocket.on('productUpdated', function (data){
-				_invokeEvents('productUpdated', data);
-			});
-
-			_webSocket.on('orderUpdated', function (data){
-				_invokeEvents('orderUpdated', data);
-			});
+			_activateRegisteredEvents();
 		};
 
 		var _disconnect = function() {
