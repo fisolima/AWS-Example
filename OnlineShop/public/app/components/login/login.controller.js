@@ -27,13 +27,9 @@
 
 		ctrl.login = function(){
 			if (ctrl.loginForm.$valid)
-			{
 				comm.emit('authenticate', ctrl.username);
-			}
 			else
-			{
 				ctrl.loginForm.submitted = true;
-			}
 		}
 	};
 	

@@ -14,7 +14,6 @@ var startQueueListener = function(sqs, queueUrl, onError, onMessage) {
 			WaitTimeSeconds: 3,
 			VisibilityTimeout: 60
 		})
-		// process message
 		.then(function(data) {
 
 			if (!data.Messages)
@@ -27,13 +26,7 @@ var startQueueListener = function(sqs, queueUrl, onError, onMessage) {
             	ReceiptHandle: data.Messages[ 0 ].ReceiptHandle
 			});
 		})
-		// delete message
-		// .then(function(message) {
-		// 	logger.info('Message deletes', message);
-		// })
-		// handle error
 		.catch(onError)
-		// next message
 		.finally(pollMessages);
 	};
 
@@ -43,31 +36,38 @@ var startQueueListener = function(sqs, queueUrl, onError, onMessage) {
 var QueueHandler = function(aws, queueName, onError, onMessage) {
 	var sqs = new aws.SQS();
 
-	sqs.listQueues({QueueNamePrefix: queueName}, function(err, data) {
-		if (err)
-			return logger.error('aws find queue', err);
+	var listQueues = Q.nbind(sqs.listQueues, sqs);
+	var createQueue = Q.nbind(sqs.createQueue, sqs);
 
+	var queue = '';
+
+	listQueues({
+		QueueNamePrefix: queueName
+	})
+	.then(function(data) {
 		var queues = data.QueueUrls || [];
 
-		var queue =  queues.find(function (queueUrl) {
+		queue = queues.find(function (queueUrl) {
 			return queueUrl.endsWith('/' + queueName);
 		});
-
-		if (!queue) {
-			sqs.createQueue({QueueName: queueName}, function(err, data) {
-				if (err)
-					return logger.error('aws create queue', err);
-
-				logger.info('Queue created', data);
-
-				startQueueListener(sqs, data.QueueUrl, onError, onMessage);
+	})
+	.then(function(){
+		if (!queue)
+			return createQueue({
+				QueueName: queueName
 			});
-		}
-		else {
-			logger.info('Queue found', queue);
+	})
+	.then(function(data) {
+		if (data)
+			queue = data.QueueUrl;
 
-			startQueueListener(sqs, queue, onError, onMessage);
-		}
+		startQueueListener(sqs, queue, onError, onMessage);
+	})
+	.catch(function(err){
+		logger.error('aws find queue', err);
+	})
+	.finally(function(){
+		logger.info(queueName + ' initialized');
 	});
 };
 

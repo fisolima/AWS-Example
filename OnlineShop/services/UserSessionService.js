@@ -34,11 +34,16 @@ module.exports = {
 		});
 	},
 	remove: function(userSession) {
+		if (!userSession)
+			return;
+		
 		var index = userSessionList.indexOf(userSession);
 
 		if (index < 0)
 			return;
 
 		userSessionList.splice(index, 1);
+
+		logger.info('Removed', userSession.username);
 	}
 };

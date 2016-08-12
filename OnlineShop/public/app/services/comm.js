@@ -96,10 +96,14 @@
 		var _disconnect = function() {
 			if (!_webSocket)
 				return;
-			
+
 			_webSocket.disconnect();
 
 			_webSocket = null;
+
+			_registeredEvents.forEach(function(registeredEvent) {
+				registeredEvent.activated = false;
+			});
 		};
 
 		var _emit = function(eventId, data){

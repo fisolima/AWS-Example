@@ -6,11 +6,15 @@
     <link rel="stylesheet" type="text/css" href="assets/css/main.css">
     <link rel="stylesheet" type="text/css" href="assets/css/header.css">
     <link rel="stylesheet" type="text/css" href="assets/css/login.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/dialog.css">
 </head>
 <body ng-controller="appController">
 
 <shop-header></shop-header>
 <div ng-view></div>
+
+<!--<a href="#" ng-click="testDialog()">Toggle</a>-->
+<!--<modal-dialog message="activityDialogMessage" dialog-visible="activityDialogVisible"></modal-dialog>-->
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="/angular/angular.js"></script>
@@ -24,6 +28,7 @@
 <script src="/app/services/orderManager.js"></script>
 <script src="/app/services/userSession.js"></script>
 <script src="/app/route.js"></script>
+<script src="/app/components/dialog/modalDialog.controller.js"></script>
 <script src="/app/components/shopHeader/shopHeader.controller.js"></script>
 <script src="/app/components/login/login.controller.js"></script>
 <script src="/app/components/products/products.controller.js"></script>
