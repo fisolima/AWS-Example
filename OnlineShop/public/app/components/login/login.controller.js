@@ -12,7 +12,7 @@
 		ctrl.username = '';
 
 		comm.registerEvent('authenticated', function(data) {
-			console.log('Login completed: %o ' +  ctrl.username, data );
+			console.log('Login completed: %o ' + ctrl.username, data );
 
 			userSession.login(ctrl.username);
 
@@ -20,16 +20,20 @@
 
 			$rootScope.$apply();
 
+			$rootScope.$broadcast('logged');
+
 			var thisEvent = arguments.callee;
 
 			comm.unregisterEvent('authenticated', thisEvent);
 		});
 
 		ctrl.login = function(){
-			if (ctrl.loginForm.$valid)
+			if (ctrl.loginForm.$valid) {
 				comm.emit('authenticate', ctrl.username);
-			else
+			}
+			else {
 				ctrl.loginForm.submitted = true;
+			}
 		}
 	};
 	

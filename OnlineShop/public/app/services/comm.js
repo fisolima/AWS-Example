@@ -75,7 +75,9 @@
 			var index = registeredEvent.callbacks.indexOf(callback);
 
 			if (index >= 0)
-				registeredEvent.callbacks = registeredEvent.callbacks.splice(index, 1);
+				registeredEvent.callbacks.splice(index, 1);
+
+			console.log(registeredEvent);
 		};
 
 		var _connect = function() {

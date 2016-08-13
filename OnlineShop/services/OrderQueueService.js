@@ -1,4 +1,4 @@
-var QueueHandler = require('./QueueHandler');
+var QueueHandler = require('./QueueService');
 var util = require('util');
 var logger = require('./LogService');
 var orderHandler = require('./OrderHandler');

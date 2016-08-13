@@ -1,7 +1,7 @@
 <section id="loginSection">
     <div>
         <form name="loginController.loginForm">
-            <input type="text" id="loginUsername" placeholder="Enter your username" ng-class="{submitted:loginController.loginForm.submitted}" ng-model="loginController.username" required >
+            <input type="text" id="loginUsername" name="loginUsername" placeholder="Enter your username" ng-class="{submitted:loginController.loginForm.submitted}" ng-model="loginController.username" required >
             <input type="submit" id="loginSignIn" value="Sign in" ng-click="loginController.login()">
         </form>
     </div>

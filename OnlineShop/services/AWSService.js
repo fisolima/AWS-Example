@@ -2,8 +2,8 @@
 
 var logger = require('./LogService');
 var aws = require('aws-sdk');
-var ProductQueueHandler = require('./ProductQueueHandler');
-var OrderQueueHandler = require('./OrderQueueHandler');
+var ProductQueueService = require('./ProductQueueService');
+var OrderQueueService = require('./OrderQueueService');
 
 var _load = function(configFile){
 
@@ -12,9 +12,9 @@ var _load = function(configFile){
 
 		logger.info("AWSService ready");
 
-		var productQueueHandler = new ProductQueueHandler(aws);
+		var productQueue = new ProductQueueService(aws);
 
-		var orderQueueHandler = new OrderQueueHandler(aws);
+		var orderQueue = new OrderQueueService(aws);
 	}
 	catch (err){
 		logger.error("AWSService", err);
