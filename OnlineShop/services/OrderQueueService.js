@@ -2,6 +2,7 @@ var QueueHandler = require('./QueueService');
 var util = require('util');
 var logger = require('./LogService');
 var orderHandler = require('./OrderHandler');
+var aws = require('aws-sdk');
 
 function processMessage(message) {
 	logger.info('Order process message', message);
@@ -15,8 +16,8 @@ function processError(error) {
 	logger.error('Order process error', error);
 }
 
-function OrderQueueHandler(aws) {
-	QueueHandler.call(this, aws, 'kp-shop-orders', processError, processMessage);
+function OrderQueueHandler() {
+	QueueHandler.call(this, 'kp-shop-orders', 'kp-order-topic', processError, processMessage);
 }
 
 util.inherits(OrderQueueHandler, QueueHandler);

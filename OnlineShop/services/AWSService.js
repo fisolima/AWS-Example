@@ -12,9 +12,9 @@ var _load = function(configFile){
 
 		logger.info("AWSService ready");
 
-		var productQueue = new ProductQueueService(aws);
+		var productQueue = new ProductQueueService();
 
-		var orderQueue = new OrderQueueService(aws);
+		var orderQueue = new OrderQueueService();
 	}
 	catch (err){
 		logger.error("AWSService", err);
