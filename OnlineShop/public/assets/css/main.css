@@ -39,3 +39,19 @@ section {
 .mainChild h3{
     margin: 5px;
 }
+
+.productTable{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid black;
+}
+.productTable th:last-child{
+    width: 60px;
+}
+
+.productTable tr > td{
+    text-align: center;
+}

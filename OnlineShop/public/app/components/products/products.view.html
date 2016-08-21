@@ -1,6 +1,17 @@
 <div class="mainChild products">
     <h3>Products</h3>
-    <div ng-repeat="product in productsController.products">
-        <span>{{product.id}} - {{product.quantity}} ({{product.reserved}})</span> <a href="#" ng-click="productsController.reserveProduct(product)">Reserve</a>
-    </div>
+    <table class="productTable">
+        <tr>
+            <th>Product Id</th>
+            <th>Quantity</th>
+            <th>Reserved</th>
+            <th></th>
+        </tr>
+        <tr ng-repeat="product in productsController.products">
+            <td>{{product.id}}</td>
+            <td>{{product.quantity}}</td>
+            <td>{{product.reserved}}</td>
+            <td><a href="#" ng-click="productsController.reserveProduct(product)">Reserve</a></td>
+        </tr>
+    </table>
 </div>
