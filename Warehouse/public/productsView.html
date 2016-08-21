@@ -1,0 +1,17 @@
+<div>
+    <h3>Products</h3>
+    <table>
+        <tr>
+            <th>Product Id</th>
+            <th>Available Units</th>
+            <th>Reserved Units</th>
+        </tr>
+        <% products.forEach(function(product){ %>
+            <tr>
+                <td><%= product.id %></td>
+                <td><%= product.available %></td>
+                <td><a href="#"><%= product.orders.length %></a></td>
+            </tr>
+        <% }); %>
+    </table>
+</div>
