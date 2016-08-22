@@ -4,11 +4,17 @@ var logger = require('./LogService');
 var aws = require('aws-sdk');
 var ProductQueueService = require('./ProductQueueService');
 var OrderQueueService = require('./OrderQueueService');
+var config = require('../config.json');
 
-var _load = function(configFile){
+var _load = function(){
 
 	try {
-		aws.config.loadFromPath(configFile);
+		aws.config.update(
+			{
+				accessKeyId: config.aws.accessKeyId,
+				secretAccessKey: config.aws.secretAccessKey,
+				region: config.aws.region
+			});
 
 		logger.info("AWSService ready");
 

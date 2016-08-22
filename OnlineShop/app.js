@@ -6,13 +6,14 @@ var logger = require('./services/LogService');
 var app = express();
 var http = require('http').Server(app);
 var awsService = require('./services/AWSService');
-var orderController = require('./ApiController/OrderController');
+var orderController = require('./apiControllers/OrderController');
+var config = require('./config.json');
 
 require('./services/CommService')(http);
 
-http.listen(3000);
+http.listen(config.port);
 
-logger.info("Online shop listening on 3000");
+logger.info("Online shop listening on " + config.port);
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use("/angular/angular.js",express.static(path.join(__dirname, "node_modules/angular/angular.js")));
@@ -35,6 +36,6 @@ app.use(function(req, res, next) {
 
 app.use(require('./services/ErrorHandler').ShowError);
 
-awsService.load(path.join(__dirname, "config.json"));
+awsService.load();
 
 module.exports = app;

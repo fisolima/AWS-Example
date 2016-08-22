@@ -14,10 +14,10 @@ section {
 }
 
 .main{
-    width: 1024px;
+    width: 1200px;
     position: absolute;
     left: 50%;
-    margin-left: -512px;
+    margin-left: -600px;
 }
 
 .mainChild{

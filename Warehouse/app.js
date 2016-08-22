@@ -4,8 +4,16 @@ var path = require('path');
 var express = require('express');
 var logger = require('./services/LogService');
 var EJS  = require('ejs');
-
 var app = express();
+var http = require('http').Server(app);
+var socketio = require('socket.io');
+var config = require('./config.json');
+
+var io = socketio(http);
+
+http.listen(config.port);
+
+logger.info('Warehouse listening on ' + config.port);
 
 app.set('views', path.join(__dirname, 'public'));
 app.set('view engine', 'ejs');
@@ -19,8 +27,8 @@ app.use('/favicon.ico', function(req, res, next){
 	res.end();
 });
 
-app.use('/', require('./controllers/homeController'));
-app.use('/products', require('./controllers/productController'));
+app.use('/', require('./controllers/HomeController'));
+app.use('/products', require('./controllers/ProductController'));
 
 app.use(function(req, res, next) {
 	var err = new Error('Not Found');
@@ -30,12 +38,5 @@ app.use(function(req, res, next) {
 });
 
 app.use(require('./services/ErrorHandler').ShowError);
-
-var server = app.listen(4000, function () {
-    var host = server.address().address;
-    var port = server.address().port;
-
-    logger.info('Online Shop listening at port', port);
-});
 
 module.exports = app;
