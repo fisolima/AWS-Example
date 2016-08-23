@@ -12,7 +12,7 @@ Object.defineProperty(Product.prototype, 'quantity',{
 		return this._quantity;
 	},
 	set: function(val) {
-		if (!val || val < 0)
+		if (val < 0)
 			throw new Error('Product quantity must be a natural number: ' + val);
 
 		this._quantity = val;
@@ -24,7 +24,7 @@ Object.defineProperty(Product.prototype, 'reserved',{
 		return this._reserved;
 	},
 	set: function(val) {
-		if (!val || val < 0)
+		if (val < 0)
 			throw new Error('Product reserved must be a natural number:' + val);
 
 		this._reserved = val;

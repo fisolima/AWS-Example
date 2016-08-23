@@ -14,6 +14,10 @@
 		ctrl.reserveProduct = function(product) {
 			orderManager.addOrder(product);
 		};
+
+		ctrl.updateList = function() {
+			productProvider.update();
+		};
 	};
 
 	app.component('products',{

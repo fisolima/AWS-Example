@@ -20,7 +20,7 @@
 
 			$rootScope.$apply();
 
-			$rootScope.$broadcast('logged');
+			$rootScope.$broadcast('user-logged');
 
 			var thisEvent = arguments.callee;
 

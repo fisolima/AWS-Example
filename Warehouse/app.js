@@ -19,6 +19,13 @@ app.set('views', path.join(__dirname, 'public'));
 app.set('view engine', 'ejs');
 
 app.engine('html', EJS.renderFile);
+
+app.use(function(req, res, next) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	next();
+});
+
 app.use("/css",express.static(path.join(__dirname, "public/styles")));
 app.use("/js",express.static(path.join(__dirname, "public/scripts")));
 app.use("/img",express.static(path.join(__dirname, "public/resources")));
@@ -29,6 +36,7 @@ app.use('/favicon.ico', function(req, res, next){
 
 app.use('/', require('./controllers/HomeController'));
 app.use('/products', require('./controllers/ProductController'));
+app.use('/api/products', require('./apiControllers/ProductApiController'));
 
 app.use(function(req, res, next) {
 	var err = new Error('Not Found');
