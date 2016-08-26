@@ -20,6 +20,19 @@
 			});
 	};
 
+	app.addProduct = function() {
+		var productId = document.getElementById('productId').value;
+
+		com.warehouse.comm.post( '/products',
+			{id: productId},
+			function(status, data) {
+				com.warehouse.logger.error("Product creation failed", status, data);
+			},
+			function (data) {
+				com.warehouse.app.loadProducts();
+			});
+	};
+
 	window.onload = function() {
 		if (com.warehouse.app.initialized)
 			return;

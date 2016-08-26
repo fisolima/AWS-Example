@@ -17,6 +17,15 @@ var getProducts = function() {
 	return products;
 };
 
+var createProduct = function(product) {
+	product.available = 0;
+	product.orders = [];
+
+	products.push(product);
+
+	// TODO send notification
+};
+
 var refillProduct = function(productId) {
 	var product = products.find(function(item){
 		return item.id == productId;
@@ -72,6 +81,7 @@ var reserveProductUnit = function(productId, orderId) {
 
 module.exports = {
 	get: getProducts,
+	create: createProduct,
 	refill: refillProduct,
 	reserve: reserveProductUnit
 };

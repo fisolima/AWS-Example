@@ -7,7 +7,7 @@
 	com.warehouse.logger = logger;
 
 	logger.error = function(message, code, data){
-		console.log('ERROR! ' + (code.toString() || '-1') + '\n' + message + '\n' + data);
+		console.log('ERROR! ' + (code.toString() || '-1') + '\n' + message + '\n' + JSON.stringify(data));
 	};
 
 	logger.info = function(message, data) {
