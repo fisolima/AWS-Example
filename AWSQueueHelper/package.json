@@ -1,0 +1,15 @@
+{
+  "name": "aws-queue-helper",
+  "version": "1.0.0",
+  "description": "Helper to initialize and use SNS and SQS Amazon queues",
+  "main": "aws-main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Killpippo",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.5.3",
+    "q": "^1.4.1"
+  }
+}
