@@ -1,17 +1,21 @@
 <div>
     <h3>Products</h3>
     <span>New product: </span><input type="text" id="productId" placeholder="Enter new product Id" /><input type="button" value="add" onclick="com.warehouse.app.addProduct()" />
-    <table>
+    <br>
+    <br>
+    <table class="productTable">
         <tr>
             <th>Product Id</th>
             <th>Available Units</th>
             <th>Reserved Units</th>
+            <th></th>
         </tr>
         <% products.forEach(function(product){ %>
             <tr>
                 <td><%= product.id %></td>
                 <td><%= product.available %></td>
                 <td><a href="#"><%= product.orders.length %></a></td>
+                <td><input type="button" value="Add Unit" data-product-id="<%= product.id %>" onclick="com.warehouse.app.addProductUnit(this)" /></td>
             </tr>
         <% }); %>
     </table>

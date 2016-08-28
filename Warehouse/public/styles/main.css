@@ -2,3 +2,30 @@ body {
     background: #918e8f;
     font-family: sans-serif;
 }
+
+
+.productTable{
+    width: 700px;
+    border-collapse: collapse;
+    font-size: small;
+}
+
+th, td {
+    border: 1px solid black;
+}
+
+.productTable th:first-child{
+    width: 300px;
+}
+.productTable th:last-child{
+    width: 75px;
+}
+
+.productTable tr > td{
+    text-align: center;
+}
+
+td > input[type=button] {
+    font-size: small;
+    height: 25px;
+}

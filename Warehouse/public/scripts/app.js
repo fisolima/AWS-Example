@@ -23,12 +23,25 @@
 	app.addProduct = function() {
 		var productId = document.getElementById('productId').value;
 
-		com.warehouse.comm.post( '/products',
+		com.warehouse.comm.put( '/products',
 			{id: productId},
 			function(status, data) {
 				com.warehouse.logger.error("Product creation failed", status, data);
 			},
 			function (data) {
+				com.warehouse.app.loadProducts();
+			});
+	};
+
+	app.addProductUnit = function (control) {
+		var productId = control.getAttribute('data-product-id');
+
+		com.warehouse.comm.post( '/products/' + encodeURIComponent(productId) + '/unit',
+			null,
+			function(status, data) {
+				com.warehouse.logger.error("Product unit increase failed", status, data);
+			},
+			function(data) {
 				com.warehouse.app.loadProducts();
 			});
 	};

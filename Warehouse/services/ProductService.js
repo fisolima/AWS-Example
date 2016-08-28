@@ -17,48 +17,82 @@ var getProducts = function() {
 	return products;
 };
 
-var createProduct = function(product) {
+var createProduct = function(product, onError, onSuccess) {
+	var msg;
+
+	if (!product || !product.id) {
+		msg = "Invalid product format";
+
+		logger.error(msg, product);
+
+		return onError(msg);
+	}
+
+	var existingProduct = products.find(function (item) {
+			return item.id == product.id;
+		});
+
+	if (existingProduct) {
+		msg = "Product already exists";
+
+		logger.error(msg);
+
+		return onError(msg);
+	}
+
 	product.available = 0;
 	product.orders = [];
 
 	products.push(product);
 
 	// TODO send notification
+
+	onSuccess(product);
 };
 
-var refillProduct = function(productId) {
+var refillProduct = function(productId, onError, onSuccess) {
 	var product = products.find(function(item){
 		return item.id == productId;
 	});
 
-	if (!product) {
-		logger.error("Product doesn't exists", productId);
+	var msg;
 
-		return false;
+	if (!product) {
+		msg = "Product doesn't exists";
+
+		logger.error(msg, productId);
+
+		return onError(msg);
 	}
 
 	product.available++;
 
 	// TODO send notification
 
-	return true;
+	onSuccess(product);
 };
 
-var reserveProductUnit = function(productId, orderId) {
+var reserveProductUnit = function(productId, orderId, onError, onSuccess) {
 	var product = products.find(function(item){
 		return item.id == productId;
 	});
 
-	if (!product) {
-		logger.error("Product doesn't exists", productId);
+	var msg;
 
-		return false;
+	if (!product) {
+		msg = "Product doesn't exists";
+
+		logger.error(msg, productId);
+
+		return onError(msg);
 	}
 
 	if (product.available === 0) {
-		logger.error("Not enough product units", productId);
+		msg = "Not enough product units";
 
-		return false;
+		logger.error(msg, productId);
+
+		return onError(msg);
 	}
 
 	var order = product.orders.find(function(item) {
@@ -66,9 +100,11 @@ var reserveProductUnit = function(productId, orderId) {
 	});
 
 	if (!order) {
-		logger.error("Order already registered:", {product: productId, order: orderId});
+		msg = "Order already registered";
 
-		return false;
+		logger.error(msg, {product: productId, order: orderId});
+
+		return onError(msg);
 	}
 
 	product.available--;
@@ -76,7 +112,7 @@ var reserveProductUnit = function(productId, orderId) {
 
 	// TODO send notification
 
-	return true;
+	onSuccess(product);
 };
 
 module.exports = {

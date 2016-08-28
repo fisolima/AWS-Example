@@ -12,31 +12,24 @@ router.get('/', function(req, res, next) {
 	res.render('productsView.html', {products: productService.get()});
 });
 
-router.post('/', bodyParser.json(), function(req, res, next) {
-
-	var product = req.body;
-
-	if (!product || !product.id) {
-		logger.error("Invalid product format", product);
-
-		return res.status(400).end("Invalid product format");
-	}
-
-	var existingProduct = productService.get().find(function (item) {
-			return item.id == product.id;
+router.put('/', bodyParser.json(), function(req, res, next) {
+	productService.create(req.body,
+		function (errorMessage) {
+			res.status(400).end(errorMessage);
+		},
+		function (product) {
+			res.status(200).end();
 		});
+});
 
-	if (existingProduct) {
-		logger.error("Product already exists");
-
-		return res.status(400).end("Product already exists");
-	}
-
-	logger.info("Product creation:");
-
-	productService.create(product);
-
-	res.status(200).end();
+router.post('/:productId/unit', function(req, res, next) {
+	productService.refill(req.params.productId,
+		function (errorMessage) {
+			res.status(400).end(errorMessage);
+		},
+		function (product) {
+			res.status(200).end();
+		});
 });
 
 module.exports = router;

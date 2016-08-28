@@ -17,7 +17,7 @@
 						onSuccess(xhr.responseText);
 						break;
 
-					case 400:
+					default:
 						onError(xhr.status, xhr.responseText);
 						break;
 				}
@@ -26,10 +26,14 @@
 
 		xhr.open(method, url);
 
-		if (data)
+		if (data) {
 			xhr.setRequestHeader('Content-Type', 'application/json');
 
-		data ?	xhr.send(JSON.stringify(data)) : xhr.send();
+			xhr.send(JSON.stringify(data))
+		}
+		else {
+			xhr.send();
+		}
 	};
 
 	comm.get = function(url, onError, onSuccess) {
@@ -38,5 +42,13 @@
 
 	comm.post = function(url, data, onError, onSuccess) {
 		processRequest('POST', url, data, onError, onSuccess);
+	};
+
+	comm.put = function(url, data, onError, onSuccess) {
+		processRequest('PUT', url, data, onError, onSuccess);
+	};
+
+	comm.delete = function(url, data, onError, onSuccess) {
+		processRequest('DELETE', url, data, onError, onSuccess);
 	};
 }());
