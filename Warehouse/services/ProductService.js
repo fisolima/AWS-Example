@@ -1,6 +1,8 @@
 "use strict";
 
+var awsSnsService = require('aws-queue-helper/sns');
 var logger = require('./LogService');
+
 var products = [
 	{id: "Cof-Dom", available: 0, orders: []},
 	{id: "Move-Dax", available: 0, orders: []},
@@ -15,6 +17,23 @@ var products = [
 
 var getProducts = function() {
 	return products;
+};
+
+var _notifyProductUpdate = function(product) {
+	process.nextTick(function() {
+		awsSnsService.send('kp-product-topic',
+		{
+			id: product.id,
+			quantity: product.available + product.orders.length,
+			reserved: product.orders.length
+		})
+		.catch(function(err) {
+			logger.error("Send object to SNS", err);
+		})
+		.finally(function(){
+			logger.info("Processed product creation");
+		});
+	});
 };
 
 var createProduct = function(product, onError, onSuccess) {
@@ -45,7 +64,7 @@ var createProduct = function(product, onError, onSuccess) {
 
 	products.push(product);
 
-	// TODO send notification
+	_notifyProductUpdate(product);
 
 	onSuccess(product);
 };
@@ -67,7 +86,7 @@ var refillProduct = function(productId, onError, onSuccess) {
 
 	product.available++;
 
-	// TODO send notification
+	_notifyProductUpdate(product);
 
 	onSuccess(product);
 };
@@ -110,7 +129,7 @@ var reserveProductUnit = function(productId, orderId, onError, onSuccess) {
 	product.available--;
 	product.orders.push(orderId);
 
-	// TODO send notification
+	_notifyProductUpdate(product);
 
 	onSuccess(product);
 };

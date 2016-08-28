@@ -69,15 +69,20 @@ var subscribeQueue = function(queueArn, topicName) {
 					Endpoint: queueArn
 				})
 			});
-			// .catch(function(err) {
-			// 	logger.error("SNS subscribe of " + topicName, err);
-			// })
-			// .finally(function(){
-			// 	logger.info("Subscription to " + topicName + " terminated");
-			// });
 };
 
 var sendObject = function(topicName, obj) {
+	snsClient = snsClient || new aws.SNS();
+
+	var publish = Q.nbind(snsClient.publish, snsClient);
+
+	return findOrCreateTopic(topicName)
+			.then(function(topic) {
+				return publish({
+					Message: JSON.stringify(obj),
+					TopicArn: topic.arn
+				});
+			});
 };
 
 module.exports = {

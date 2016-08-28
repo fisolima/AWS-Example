@@ -47,4 +47,14 @@ app.use(function(req, res, next) {
 
 app.use(require('./services/ErrorHandler').ShowError);
 
+var awsHelper = require('aws-queue-helper');
+var awsSQSHelper = require('aws-queue-helper/sqs');
+
+awsHelper.load(config.aws, function(err, aws) {
+	if (err)
+		return logger.error("AWS initialization", err);
+
+	logger.info("AWS ready");
+});
+
 module.exports = app;

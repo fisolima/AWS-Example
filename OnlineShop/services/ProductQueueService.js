@@ -1,4 +1,3 @@
-var QueueHandler = require('./QueueService');
 var util = require('util');
 var logger = require('./LogService');
 var productHandler = require('./ProductHandler');
@@ -31,10 +30,7 @@ function processError(error) {
 	logger.error('Product process error', error);
 }
 
-function ProductQueueHandler() {
-	QueueHandler.call(this, 'kp-shop-products', 'kp-product-topic', processError, processMessage);
-}
-
-util.inherits(ProductQueueHandler, QueueHandler);
-
-module.exports = ProductQueueHandler;
+module.exports = {
+	processMessage: processMessage,
+	processError: processError
+};

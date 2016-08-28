@@ -5,7 +5,6 @@ var express = require('express');
 var logger = require('./services/LogService');
 var app = express();
 var http = require('http').Server(app);
-var awsService = require('./services/AWSService');
 var config = require('./config.json');
 
 require('./services/CommService')(http);
@@ -42,6 +41,44 @@ app.use(function(req, res, next) {
 
 app.use(require('./services/ErrorHandler').ShowError);
 
-awsService.load();
+var awsHelper = require('aws-queue-helper');
+var awsSQSHelper = require('aws-queue-helper/sqs');
+
+awsHelper.load(config.aws, function(err, aws) {
+	if (err)
+		return logger.error("AWS initialization", err);
+
+	logger.info("AWS ready");
+
+	var productQueueService = require('./services/ProductQueueService');
+
+	awsSQSHelper
+		.loadQueue('kp-shop-products', 'kp-product-topic', productQueueService.processError, productQueueService.processMessage)
+		.then(function(data) {
+			if (data)
+				logger.info('Permission set: ', data);
+		})
+		.catch(function(err) {
+			logger.error('aws find queue', err);
+		})
+		.finally(function() {
+			logger.info('kp-shop-products initialized');
+		});
+
+	var orderQueueService = require('./services/OrderQueueService');
+
+	awsSQSHelper
+		.loadQueue('kp-shop-orders', 'kp-order-topic', orderQueueService.processError, orderQueueService.processMessage)
+		.then(function(data) {
+			if (data)
+				logger.info('Permission set: ', data);
+		})
+		.catch(function(err) {
+			logger.error('aws find queue', err);
+		})
+		.finally(function() {
+			logger.info('kp-shop-orders initialized');
+		});
+});
 
 module.exports = app;

@@ -18,8 +18,14 @@ var parseProduct = function(productJson) {
 		return logger.error("Error parse product", err);
 	}
 
-	if (!product || !product.id || !product.quantity || !product.reserved)
+	if (!product || !product.id)
 		throw new Error("Invalid product data: " + productJson);
+
+	if (!product.quantity)
+		product.quantity = 0;
+
+	if (!product.reserved)
+		product.reserved = 0;
 
 	return product;
 };
