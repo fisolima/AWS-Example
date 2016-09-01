@@ -6,24 +6,32 @@ var logType = {
 	info: 'INFO'
 };
 
-var WriteLog = function(type, message, obj)
-{
-	console.log( type + ' - ' + message + ((obj !== undefined) ? JSON.stringify(obj) : ''));
-};
 
-var writeError = function (message, err, obj)
+var writeError = function (message, obj)
 {
-	WriteLog(logType.error, message, obj !== null ? {err: err, obj: obj} : err);
+	var e = (obj instanceof Error) ? obj : new Error('stackquery');
+
+	console.error(
+		logType.error +	' - ' + (new Date()) + '\n' +
+		message + '\n' +
+		((obj !== undefined) ? JSON.stringify(obj) : '') + '\n' +
+		e.stack + '\n');
 };
 
 var writeWarning = function (message, obj)
 {
-	WriteLog(logType.warning, message, obj);
+	console.warn(
+		logType.warning + ' - ' + (new Date()) + '\n' +
+		message + '\n' +
+		((obj !== undefined) ? JSON.stringify(obj) + '\n' : ''));
 };
 
 var writeInfo = function (message, obj)
 {
-	WriteLog(logType.info, message, obj);
+	console.log(
+		logType.info + ' - ' + (new Date()) + '\n' +
+		message + '\n' +
+		((obj !== undefined) ? JSON.stringify(obj) + '\n' : ''));
 };
 
 module.exports =

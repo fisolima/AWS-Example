@@ -36,7 +36,7 @@ var findOrCreateTopic = function(topicName) {
 				}
 
 				if (!topic) {
-					logger.info("Creating topic: " + topicName);
+					console.log("Creating topic: " + topicName);
 
 					return createTopic({Name: topicName});
 				}

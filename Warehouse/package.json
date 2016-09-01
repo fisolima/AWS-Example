@@ -2,8 +2,8 @@
   "name": "Warehouse",
   "version": "0.0.1",
   "dependencies": {
-    "aws-queue-helper": "../AWSQueueHelper/aws-queue-helper-1.0.0.tgz",
     "aws-sdk": "^2.4.6",
+    "aws-queue-helper": "file:../AWSQueueHelper/aws-queue-helper-1.0.0.tgz",
     "body-parser": "^1.15.2",
     "ejs": "^2.5.1",
     "express": "^4.14.0",

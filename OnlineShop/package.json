@@ -4,8 +4,8 @@
   "dependencies": {
     "angular": "^1.5.8",
     "angular-route": "^1.5.8",
-    "aws-queue-helper": "../AWSQueueHelper/aws-queue-helper-1.0.0.tgz",
     "aws-sdk": "^2.4.6",
+    "aws-queue-helper": "file:../AWSQueueHelper/aws-queue-helper-1.0.0.tgz",
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "q": "^1.4.1",

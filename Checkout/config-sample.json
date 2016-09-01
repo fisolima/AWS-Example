@@ -1,0 +1,12 @@
+{
+  "aws":
+  {
+    "accessKeyId": "ACCESS_KEY",
+    "secretAccessKey": "SECRET_KEY",
+    "region": "eu-central-1"
+  },
+  "port": "HTTP PORT",
+  "onlineShopUrl": "online shop url",
+  "warehouseUrl": "warehouse url",
+  "checkoutUrl": "checkout url"
+}

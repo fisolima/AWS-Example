@@ -26,7 +26,7 @@
 		var _addOrder = function(product) {
 				var orderRequest = {
 					username: userSession.getUsername(),
-					productName: product.id
+					productId: product.id
 				};
 
 				$http({

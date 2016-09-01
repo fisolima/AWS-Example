@@ -1,0 +1,31 @@
+body {
+    background: #00e56e;
+    font-family: sans-serif;
+}
+
+
+.orderTable{
+    width: 700px;
+    border-collapse: collapse;
+    font-size: small;
+}
+
+th, td {
+    border: 1px solid black;
+}
+
+.orderTable th:first-child{
+    width: 300px;
+}
+.orderTable th:last-child{
+    width: 75px;
+}
+
+.orderTable tr > td{
+    text-align: center;
+}
+
+td > input[type=button] {
+    font-size: small;
+    height: 25px;
+}
