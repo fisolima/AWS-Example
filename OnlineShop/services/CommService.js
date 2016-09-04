@@ -23,9 +23,11 @@ var comm = function(http) {
 		socket.on('disconnect', function (){
 			var userSession = userSessionService.findById(socket.id);
 
-			userSessionService.remove(userSession);
-			
-			logger.info('User disconnected', userSession.username);
+			if (userSession) {
+				userSessionService.remove(userSession);
+
+				logger.info('User disconnected', userSession.username);
+			}
 		});
 	});
 

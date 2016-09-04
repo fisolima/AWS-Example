@@ -11,15 +11,15 @@
 
 		comm.registerEvent('orderUpdated', function(item) {
 			var order = _orders.find(function(orderItem) {
-				return orderItem.id === item.id;
+				return (orderItem.id && orderItem.id === item.id)
+					|| (orderItem.requestId && orderItem.requestId === item.requestId);
 			});
 
 			if (!order) {
-				_orders.push(new Order(item));
+				_orders.push(item);
 			}				
 			else {
 				order.status = item.status;
-				order.updateDate = item.updateDate;
 			}				
 		});
 

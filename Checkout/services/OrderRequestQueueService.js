@@ -18,11 +18,11 @@ function processMessage(message) {
 			break;
 	}
 
-	logger.info('Product process message', messageBody);
+	logger.info('Order process message', messageBody);
 }
 
 function processError(error) {
-	logger.error('Product process error', error);
+	logger.error('Order process error', error);
 }
 
 module.exports = {

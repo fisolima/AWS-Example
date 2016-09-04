@@ -4,10 +4,11 @@
   "dependencies": {
     "angular": "^1.5.8",
     "angular-route": "^1.5.8",
-    "aws-sdk": "^2.4.6",
     "aws-queue-helper": "file:../AWSQueueHelper/aws-queue-helper-1.0.0.tgz",
+    "aws-sdk": "^2.4.6",
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
+    "node-uuid": "^1.4.7",
     "q": "^1.4.1",
     "socket.io": "^1.4.8"
   }
