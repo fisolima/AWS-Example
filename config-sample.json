@@ -1,0 +1,23 @@
+{
+  "aws":
+  {
+    "accessKeyId": "ACCESS_KEY",
+    "secretAccessKey": "SECRET_KEY",
+    "region": "REGION"
+  },
+  "onlineShop":
+  {
+    "port": "HTTP LISTENING PORT",
+    "url": "onlineshop url"
+  },
+  "warehouse":
+  {
+    "port": "HTTP LISTENING PORT",
+    "url": "warehouse url"
+  },
+  "checkout":
+  {
+    "port": "HTTP LISTENING PORT",
+    "url": "checkout url"
+  }
+}

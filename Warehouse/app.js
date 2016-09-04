@@ -7,13 +7,13 @@ var EJS  = require('ejs');
 var app = express();
 var http = require('http').Server(app);
 var socketio = require('socket.io');
-var config = require('./config.json');
+var config = require('../config.json');
 
 var io = socketio(http);
 
-http.listen(config.port);
+http.listen(config.warehouse.port);
 
-logger.info('Warehouse listening on ' + config.port);
+logger.info('Warehouse listening on ' + config.warehouse.port);
 
 app.set('views', path.join(__dirname, 'public'));
 app.set('view engine', 'ejs');

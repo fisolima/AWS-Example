@@ -4,7 +4,7 @@
 var EventEmitter = require('events');
 var logger = require('./LogService');
 var http = require('http');
-var config = require('../config.json');
+var config = require('../../config.json');
 
 var productEmitter = new EventEmitter();
 
@@ -32,7 +32,7 @@ var parseProduct = function(productJson) {
 
 var getList = function(callback) {
 	http.get(
-		config.warehouseUrl + '/api/products',
+		config.warehouse.url + '/api/products',
 		function(res) {
 			var body = '';
 

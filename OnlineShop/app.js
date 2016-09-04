@@ -5,13 +5,13 @@ var express = require('express');
 var logger = require('./services/LogService');
 var app = express();
 var http = require('http').Server(app);
-var config = require('./config.json');
+var config = require('../config.json');
 
 require('./services/CommService')(http);
 
-http.listen(config.port);
+http.listen(config.onlineShop.port);
 
-logger.info("Online shop listening on " + config.port);
+logger.info("Online shop listening on " + config.onlineShop.port);
 
 app.use(function(req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
