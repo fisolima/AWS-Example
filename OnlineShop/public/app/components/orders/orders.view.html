@@ -1,6 +1,20 @@
-<div class="mainChild orders">
+<div class="mainChild orders" ng-init="ordersController.updateList()">
     <h3>Orders</h3>
-    <div ng-repeat="order in ordersController.orders">
-        {{order}}
-    </div>
+    <!--<div ng-repeat="order in ordersController.orders">-->
+        <!--{{order}}-->
+    <!--</div>-->
+    <table class="baseTable">
+        <tr>
+            <th>Order Id</th>
+            <th>Request Id</th>
+            <th>Product</th>
+            <th>Status</th>
+        </tr>
+        <tr ng-repeat="order in ordersController.orders">
+            <td>{{order.id}}</td>
+            <td>{{order.requestId}}</td>
+            <td>{{order.productId}}</td>
+            <td>{{order.status}}</td>
+        </tr>
+    </table>
 </div>

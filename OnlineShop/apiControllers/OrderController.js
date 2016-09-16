@@ -5,6 +5,8 @@ var bodyParser = require('body-parser');
 var awsSnsService = require('aws-queue-helper/sns');
 var Order = require('../objects/Order');
 var orderHandler = require('../services/OrderHandler');
+var http = require('http');
+var config = require('../../config.json');
 
 router.post('/', bodyParser.json(), function(req, res) {
 	var orderRequest = req.body;
@@ -19,7 +21,7 @@ router.post('/', bodyParser.json(), function(req, res) {
 
 	order.username = orderRequest.username;
 	order.productId = orderRequest.productId;
-	order.status = 'REQUESTED';
+	order.status = 'IN FLIGHT';
 
 	logger.info('Order requested: ', order);
 
@@ -32,6 +34,22 @@ router.post('/', bodyParser.json(), function(req, res) {
 	awsSnsService.send('kp-order-request-topic', orderModel);
 
 	res.sendStatus(200);
+});
+
+router.get('/:username', function(req, res) {
+	http.get(
+		config.checkout.url + '/api/orders/' + req.params.username,
+		function(response) {
+			var body = '';
+
+			response.on('data', function(data){
+				body += data;
+			});
+
+			response.on('end', function(){
+				res.status(200).json(JSON.parse(body));
+		});
+	});
 });
 
 module.exports = router;

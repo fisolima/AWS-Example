@@ -26,13 +26,13 @@
 
 		comm.registerEvent('productUpdated', addOrUpdateProduct);
 
-		var server = {};
+		var service = {};
 
-		Object.defineProperty(server, 'products', {
+		Object.defineProperty(service, 'products', {
 			get: function() {return _products;}
 		});
 
-		server.update = function(){
+		service.update = function(){
 			console.log('product updated');
 
 			$http.get('/api/products')
@@ -48,6 +48,6 @@
 					});
 		};
 
-		return server;
+		return service;
 	}]);
 }());

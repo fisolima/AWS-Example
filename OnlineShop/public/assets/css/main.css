@@ -20,19 +20,20 @@ section {
     margin-left: -600px;
 }
 
-.mainChild{
-    width: 45%;
+.mainChild {
     height: 500px;
     border: 2px solid #ffffff;
     border-radius: 10px;
     display: inline-block;
 }
 
-.product{
+.products {
+    width: 32%;
     float: left;
 }
 
 .orders{
+    width: 65%;
     float: right;
 }
 
@@ -40,10 +41,14 @@ section {
     margin: 5px;
 }
 
-.productTable{
+.baseTable{
     width: 100%;
     border-collapse: collapse;
     font-size: small;
+}
+
+.productTable {
+
 }
 
 th, td {
@@ -53,6 +58,6 @@ th, td {
     width: 60px;
 }
 
-.productTable tr > td{
+.baseTable tr > td{
     text-align: center;
 }

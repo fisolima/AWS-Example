@@ -15,9 +15,7 @@
 			orderManager.addOrder(product);
 		};
 
-		ctrl.updateList = function() {
-			productProvider.update();
-		};
+		ctrl.updateList = productProvider.update;
 	};
 
 	app.component('products',{

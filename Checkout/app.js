@@ -35,7 +35,7 @@ app.use('/favicon.ico', function(req, res, next){
 });
 
 app.use('/', require('./controllers/homeController'));
-
+app.use('/api/orders', require('./apiControllers/orderApiController'));
 
 app.use(function(req, res, next) {
 	var err = new Error('Not Found');

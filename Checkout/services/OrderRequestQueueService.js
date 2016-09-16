@@ -1,6 +1,7 @@
 "use strict";
 
 var logger = require('./LogService');
+var orderService = require('./OrderService');
 
 function processMessage(message) {
 	var messageBody, type;
@@ -19,6 +20,8 @@ function processMessage(message) {
 	}
 
 	logger.info('Order process message', messageBody);
+
+	orderService.add(JSON.parse(messageBody));
 }
 
 function processError(error) {

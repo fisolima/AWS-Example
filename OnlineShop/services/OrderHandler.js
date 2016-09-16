@@ -18,7 +18,7 @@ var parseOrder = function(orderJson) {
 		return logger.error("Error parse order", err);
 	}
 
-	if (!order || !order.id || !order.username || !order.productName)
+	if (!order || !order.id || !order.username || !order.productId)
 		throw Error("Invalid product data: " + orderJson);
 
 	return order;

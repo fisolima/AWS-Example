@@ -10,6 +10,8 @@
 		var ctrl = this;
 		
 		ctrl.orders = orderManager.orders;
+
+		ctrl.updateList = orderManager.updateList;
 	};
 
 	app.component('orders',{

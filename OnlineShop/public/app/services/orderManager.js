@@ -19,6 +19,7 @@
 				_orders.push(item);
 			}				
 			else {
+				order.id = order.id || item.id;
 				order.status = item.status;
 			}				
 		});
@@ -46,6 +47,28 @@
 
 		var service = {
 			addOrder: _addOrder
+		};
+
+		service.updateList = function(){
+			console.log('order updated');
+
+			$http.get('/api/order/' + userSession.getUsername())
+				.then(
+					// success
+					function(res) {
+						_orders.length = 0;
+
+						console.log('%o', res.data);
+
+						res.data.forEach(function(order) {
+							_orders.push(order);
+						});
+					},
+					// error
+					function(res) {
+						console.log(res.data || 'product request failed');
+						console.log(res.status);
+					});
 		};
 
 		Object.defineProperty(service, 'orders', {
