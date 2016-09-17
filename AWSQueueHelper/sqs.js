@@ -4,13 +4,12 @@ var topicService = require('./sns');
 var aws = require('aws-sdk');
 
 var config = {
-	waitTime: 3,
-	visibilityTimeout: 10
+	waitTime: 10,
+	visibilityTimeout: 25
 };
 
 var startQueueListener = function(sqs, queueUrl, onError, onMessage) {
 	var receiveMessage = Q.nbind( sqs.receiveMessage, sqs );
-	var deleteMessage = Q.nbind( sqs.deleteMessage, sqs );
 
 	var pollMessages = function() {
 		receiveMessage({
@@ -23,11 +22,18 @@ var startQueueListener = function(sqs, queueUrl, onError, onMessage) {
 			if (!data.Messages)
 				return;
 
-			data.Messages.forEach(onMessage);
+			data.Messages.forEach(function(message) {
+				process.nextTick(function() {
+					onMessage(message);
 
-			return deleteMessage({
-				QueueUrl: queueUrl,
-            	ReceiptHandle: data.Messages[0].ReceiptHandle
+					sqs.deleteMessage({
+						QueueUrl: queueUrl,
+						ReceiptHandle: message.ReceiptHandle
+					}, function(err, data) {
+						if (err)
+							return console.log('%o', err);
+					});
+				});
 			});
 		})
 		.catch(onError)
