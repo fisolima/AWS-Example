@@ -1,7 +1,6 @@
 /* global ../node_modules/angular/angular.js */
 
 (function(){
-
 	'use strict';
 
 	var app = angular.module('app');
