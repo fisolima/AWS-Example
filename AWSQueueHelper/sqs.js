@@ -8,6 +8,7 @@ var config = {
 	visibilityTimeout: 25
 };
 
+
 var startQueueListener = function(sqs, queueUrl, onError, onMessage) {
 	var receiveMessage = Q.nbind( sqs.receiveMessage, sqs );
 
