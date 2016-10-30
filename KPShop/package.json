@@ -1,0 +1,11 @@
+{
+  "name": "kpshop",
+  "version": "1.0.0",
+  "description": "Online shop example with AWS message queue",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "fisolima@gmail.com",
+  "license": "ISC"
+}
